@@ -1,0 +1,113 @@
+header {
+    background-color: #b8174c;
+    color: white;
+    height: 50px;
+    font-size: large;
+    line-height: 50px;
+    padding-left: 25px;
+  }
+  
+  nav {
+    background-color: #19a187;
+    color: white;
+    height: 25px;
+    line-height: 25px;
+    padding-left: 25px;
+  }
+  
+  nav.main-menu a {
+    color: white;
+  }
+  
+  main {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 20px;
+  }
+  
+  table.paper {
+    width: 100%;
+  }
+  
+  .titulo-tabla {
+    border-bottom: #19a187 1px solid;
+    text-align: left;
+  }
+  
+  .numero,
+  .acciones {
+    text-align: right;
+  }
+  
+  .mini-boton {
+    border: solid 1px darkgray;
+    background-color: lightgray;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+  
+  table.paper .error {
+    font-size: small;
+    padding-left: 40px;
+    color: #990000;
+  }
+  
+  .pie-de-pagina {
+    margin-top: 40px;
+    padding: 20px;
+    border-top: solid 1px #b8174c;
+  }
+  
+  .lista-vacia {
+    text-align: center;
+    padding: 20px;
+    color: #666666;
+  }
+  
+  /* Estilos del formulario */
+  
+  .campo-formulario label {
+    display: block;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0;
+    margin-top: .75rem;
+  }
+  
+  .campo-formulario .radio-label,
+  .campo-formulario>input[type="radio"]~label {
+    display: inline-block;
+    margin-right: 2rem;
+    margin-bottom: .5rem;
+  }
+  
+  .campo-formulario input:not([type="radio"]) {
+    width: 100%;
+  }
+  
+  .lista-errores {
+    background-color: rgba(200, 0, 0, .25);
+    color: darkred;
+    border: solid 2px darkred;
+    padding: 2rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .icono-error {
+    margin-right: 1rem;
+    font-size: 32px;
+  }
+  
+  .exito-flash {
+    background-color: rgba(0, 200, 0, .25);
+    color: darkgreen;
+    border: solid 2px darkgreen;
+    padding: 2rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+  }
