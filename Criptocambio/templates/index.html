@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+</head>
+<body>
+    <h1>Formulario</h1>
+
+    <form action="/nuevo.html" method="get">
+        <fieldset>
+            <legend>Datos de identificación</legend>
+            <label for="nombre">
+                Nombre:
+            </label>
+            <input type="text" id="nombre" name="nombre">
+            <br>
+            <label for="apellidos">
+                Apellidos:
+            </label>
+            <input type="text" id="apellidos" name="apellidos">
+        </fieldset>
+        <fieldset>
+            <legend>Datos de contacto</legend>
+            <label for="email">
+                Correo electrónico:
+            </label>
+            <input type="email" name="email" id="email">
+            <br>
+            <label for="telefono">
+                Teléfono:
+            </label>
+            <input type="tel" name="telefono" id="telefono">
+        </fieldset>
+
+        <br><br>
+
+        <fieldset>
+            <legend>Sobre ti:</legend>
+            <label for="color">
+                ¿Cual es u color favorito?
+            </label>
+            <input type="color" name="color" id="color">
+            <br>
+            <label for="bio"
+                >Biografia:
+            </label>
+            <input type="text" name="bio" id="bio">
+        </fieldset>
+        <input type="submit" value="Enviar formulario">
+    </form>
+</body>
+</html>
