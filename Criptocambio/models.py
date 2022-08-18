@@ -1,8 +1,6 @@
-from typing_extensions import Self
 import requests
-
-from .import APIKEY
-
+#from .import APIKEY
+APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 class APIError(Exception):
     pass
 
@@ -14,8 +12,6 @@ class CriptoModel:
     - cambio
     - consultar cambio (método)
     """
-Criptocambio=CriptoModel()
-
     def __init__ (self,origen,destino):
         """
         Construye un objeto con las monedas origen y destino
@@ -38,7 +34,7 @@ Criptocambio=CriptoModel()
 
         if respuesta.status_code == 200:
             # guardo el cambio obtenido
-            self.cambio = self.respuesta.json()["rate"]
+            self.cambio = respuesta.json()["rate"]
         else:
             raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
