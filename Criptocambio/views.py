@@ -7,7 +7,7 @@ def home():
     """
     Muestra la lista/tabla de movimientos cargados.
     """
-    return 
+    return render_template("nuevo.html")
 
 @app.route('/compra',methods=['GET', 'POST'])
 def compra():
