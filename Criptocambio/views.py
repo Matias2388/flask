@@ -1,13 +1,13 @@
 from flask import render_template
 from . import app
-from.models import CriptoModel
+from.models import CriptoModel, Criptocambio
 
 @app.route('/')
 def home():
     """
     Muestra la lista/tabla de movimientos cargados.
     """
-    return CriptoModel.consultar_cambio("EUR")
+    return Criptocambio("EUR","BTC")
 
 @app.route('/compra',methods=['GET', 'POST'])
 def compra():

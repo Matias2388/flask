@@ -1,3 +1,4 @@
+from typing_extensions import Self
 import requests
 
 from .import APIKEY
@@ -13,8 +14,9 @@ class CriptoModel:
     - cambio
     - consultar cambio (método)
     """
+Criptocambio=CriptoModel()
 
-    def __init__(self,origen,destino):
+    def __init__ (self,origen,destino):
         """
         Construye un objeto con las monedas origen y destino
         y el cambio obtenido desde CoinAPI inicializado a cero.
@@ -32,7 +34,7 @@ class CriptoModel:
             "X-CoinAPI-Key": APIKEY
         }
         url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
-        self.respuesta = requests.get(url, headers=cabeceras)
+        respuesta = requests.get(url, headers=cabeceras)
 
         if respuesta.status_code == 200:
             # guardo el cambio obtenido
