@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import Flask,render_template,request,abort
 from . import app
 from.models import CriptoModel
 
@@ -11,7 +11,19 @@ def home():
 
 @app.route('/compra',methods=['GET', 'POST'])
 def compra():
-    return render_template ("index.html")
+    if request.method == "GET":
+        return render_template("index.html")
+
+    origen = request.form.get("origen")
+    destino = request.form.get("destino")
+
+    if not origen or not destino:
+        abort(400)
+
+    crypto = CriptoModel(origen, destino)
+    crypto.consultar_cambio()
+
+    return render_template("index.html", crypto=crypto.cambio)
 
 
 @app.route('/estado')
