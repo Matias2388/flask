@@ -1,3 +1,5 @@
+<!--corresponde al template del formulario-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,19 +8,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMPRA DE CRIPTOs</title>
 </head>
-<body>
-    <h1>COMPRA DE CRIPTOs</h1>
+    <body>
+        <h1>COMPRA DE CRIPTOs</h1>
 
-    <form action="/nuevo.html" method="get">
+    <form action="/compra" method="post">
         <fieldset>
             <legend>Introduciendo datos monedas</legend>
             <label>Moneda origen</label>
-            <input type="text">
+            <select id="origen">
+                <option value="">EUR</option>
+                <option value="">BTC</option>
+                <option value="">ETH</option>
+                <option value="">LINK</option>
+                <option value="">LUNA</option>
+                <option value="">ATOM</option>
+                <option value="">SOL</option>
+                <option value="">USDT</option>   
+            </select>
             <br>
             <label>Moneda destino</label>
-            <input type="text">
+            <select id="destino">
+                <option value="">EUR</option>
+                <option value="">BTC</option>
+                <option value="">ETH</option>
+                <option value="">LINK</option>
+                <option value="">LUNA</option>
+                <option value="">ATOM</option>
+                <option value="">SOL</option>
+                <option value="">USDT</option>
+            </select>
         </fieldset>
-        <input type="submit" value="Enviar formulario">
+        <label for="crypto">Cambio:</label>
+        <input id="crypto" type="text" name="crypto" value="{{ crypto }}">
+        {{ crypto }}
     </form>
+
 </body>
 </html>

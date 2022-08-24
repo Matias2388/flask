@@ -22,7 +22,7 @@ def compra():
 
     crypto = CriptoModel(origen, destino)
     crypto.consultar_cambio()
-
+    
     return render_template("index.html", crypto=crypto.cambio)
 
 
