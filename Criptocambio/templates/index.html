@@ -11,37 +11,50 @@
     <body>
         <h1>COMPRA DE CRIPTOs</h1>
 
-    <form action="/compra" method="post">
+    <form action="/consulta" method="post">
         <fieldset>
             <legend>Introduciendo datos monedas</legend>
-            <label>Moneda origen</label>
-            <select id="origen">
-                <option value="">EUR</option>
-                <option value="">BTC</option>
-                <option value="">ETH</option>
-                <option value="">LINK</option>
-                <option value="">LUNA</option>
-                <option value="">ATOM</option>
-                <option value="">SOL</option>
-                <option value="">USDT</option>   
+            <label for="origen">Moneda origen</label>
+            <select id="origen" name="origen">
+                <option value="">-</option>
+                <option value="EUR">Euro</option>
+                <option value="BTC">Bitcoin</option>
+                <option value="ETH">ETH</option>
+                <option value="LINK">LINK</option>
+                <option value="LUNA">LUNA</option>
+                <option value="ATOM">ATOM</option>
+                <option value="SOL">SOL</option>
+                <option value="USDT">USDT</option>
             </select>
             <br>
-            <label>Moneda destino</label>
-            <select id="destino">
-                <option value="">EUR</option>
-                <option value="">BTC</option>
-                <option value="">ETH</option>
-                <option value="">LINK</option>
-                <option value="">LUNA</option>
-                <option value="">ATOM</option>
-                <option value="">SOL</option>
-                <option value="">USDT</option>
+            <label for="destino">Moneda destino</label>
+            <select id="destino" name="destino">
+                <option value="">-</option>
+                <option value="EUR">Euro</option>
+                <option value="BTC">Bitcoin</option>
+                <option value="ETH">ETH</option>
+                <option value="LINK">LINK</option>
+                <option value="LUNA">LUNA</option>
+                <option value="ATOM">ATOM</option>
+                <option value="SOL">SOL</option>
+                <option value="USDT">USDT</option>
             </select>
-        </fieldset>
-        <label for="crypto">Cambio:</label>
-        <input id="crypto" type="text" name="crypto" value="{{ crypto }}">
-        {{ crypto }}
-    </form>
+            <br>
+            <input type="submit" value="Calcular">
 
+
+            <br>
+            <br>
+            {% if crypto %}
+                <h3>Cambio: {{ crypto }}</h3>
+                <input type="number" name="cantidad">
+                <input type="submit" formaction="/compra" formmethod="post" value="Comprar">
+            {% endif %}
+        </fieldset>
+
+
+
+    </form>
 </body>
 </html>
+
