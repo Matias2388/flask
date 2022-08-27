@@ -1,4 +1,5 @@
-from models import CriptoModel, Database, Transaccion
+from.models import CriptoModel, Database, Transaccion
+
 
 APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 
@@ -6,7 +7,6 @@ from flask import Flask, render_template, request, abort
 
 db = Database()
 app = Flask(__name__)
-
 
 @app.route('/')
 def home():
@@ -59,3 +59,4 @@ def transacciones():
 @app.route('/estado')
 def actualizar():
     return "Muestra el estado de la inversion"
+
