@@ -1,4 +1,4 @@
-from.models import CriptoModel, Database, Transaccion
+from .models import CriptoModel, Database, Transaccion
 
 
 APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
