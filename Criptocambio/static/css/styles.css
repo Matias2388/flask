@@ -6,6 +6,17 @@ header {
     line-height: 50px;
     padding-left: 25px;
   }
+
+  body{
+    background-color: #243e63;
+    font-family: Arial;
+  }
+
+  .titulo{
+    text-align: center;
+    color: white;
+    font-size: 50px;
+  }
   
   nav {
     background-color: #19a187;

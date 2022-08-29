@@ -5,7 +5,7 @@
 	Color iluminado: 369681;
 */
 body{
-	background-color: #632432;
+	background-color: #243e63;
 	font-family: Arial;
 }
 
@@ -33,8 +33,8 @@ caption {
 }
 
 thead{
-	background-color: #246355;
-	border-bottom: solid 5px #0F362D;
+	background-color: #242f63;
+	border-bottom: solid 5px #0c084b;
 	color: white;
 }
 
@@ -43,6 +43,10 @@ tr:nth-child(even){
 }
 
 tr:hover td{
-	background-color: #369681;
+	background-color: #0b0a68;
+	color: white;
+}
+
+.nueva_compra,.estado{
 	color: white;
 }
