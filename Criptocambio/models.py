@@ -58,11 +58,18 @@ class CriptoModel:
 
 
 class Transaccion:
-    def __init__(self, origen, destino, cantidad):
-        self.origen =  origen
+    def __init__(self, origen, destino, cantidad, cambio):
+        self.origen = origen
         self.destino = destino
         self.cantidad = cantidad
         self.fecha = datetime.datetime.now()
+        self.cambio = cambio
+
+
+class Saldo:
+    def __init__(self, moneda, cantidad):
+        self.moneda = moneda
+        self.cantidad = cantidad
 
 class Database:
     def __init__(self):
@@ -75,10 +82,47 @@ class Database:
             fecha text
         );""")
 
+        self.db.execute("""
+        CREATE TABLE IF NOT EXISTS cartera (
+            id integer PRIMARY KEY,
+            moneda text,
+            cantidad integer
+        );
+        """)
+
     def guardar_transaccion(self, tx: Transaccion):
         cur = self.db.cursor()
         cur.execute("INSERT INTO transacciones(origen, destino, cantidad, fecha) VALUES (?, ?, ?, ?)",
                     (tx.origen, tx.destino, tx.cantidad, tx.fecha.timestamp()))
+
+        cur.execute("SELECT * FROM cartera WHERE moneda=?", (tx.destino,))
+        dest = cur.fetchone()
+        if dest:
+            cantidad = dest[2]
+            cantidad += tx.cantidad
+
+            cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (cantidad, tx.destino))
+        else:
+            cur.execute("INSERT INTO cartera(moneda, cantidad) VALUES (?, ?)", (tx.destino, tx.cantidad))
+
+        cur.execute("SELECT * FROM cartera WHERE moneda=?", (tx.origen,))
+        origen = cur.fetchone()
+        if origen:
+            cantidad = origen[2]
+
+            cambio = tx.cantidad * tx.cambio
+            cantidad -= cambio
+
+            if cantidad < 0:
+                raise APIError(
+                    "Moneda de origen sin saldo"
+                )
+
+            cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (cantidad, tx.origen))
+        else:
+            raise APIError(
+                "Moneda de origen no registrada"
+            )
 
         self.db.commit()
 
@@ -88,9 +132,20 @@ class Database:
 
         data = []
         for fila in cur.fetchall():
-            tx = Transaccion(fila[1], fila[2], fila[3])
+            tx = Transaccion(fila[1], fila[2], fila[3], 0)
             tx.fecha = datetime.datetime.fromtimestamp(float(fila[4]))
 
             data.append(tx)
+
+        return data
+
+    def conseguir_cartera(self) -> List[Saldo]:
+        cur = self.db.cursor()
+        cur.execute("SELECT * FROM cartera")
+
+        data = []
+        for fila in cur.fetchall():
+            saldo = Saldo(fila[1], fila[2])
+            data.append(saldo)
 
         return data

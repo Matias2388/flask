@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado</title>
+    <table>
+        <tr>
+            <th>Origen</th>
+            <th>Destino</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Cambio</th>
+        </tr>
+        {% for saldo in saldos %}
+        <tr>
+            <td>{{ saldo.origen }}</td>
+            <td>{{ saldo.destino }}</td>
+            <td>{{ saldo.cantidad }}</td>
+            <td>{{ saldo.fecha }}</td>
+            <td>{{ saldo.cambio }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</head>
+<body>
+
+</body>
+</html>

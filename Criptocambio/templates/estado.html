@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Estado</title>
+    <table>
+        <tr>
+            <th>Moneda</th>
+            <th>Cantidad</th>
+        </tr>
+        {% for saldo in saldos %}
+        <tr>
+            <td>{{ saldo.moneda }}</td>
+            <td>{{ saldo.cantidad }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</head>
+<body>
+
+</body>
+</html>

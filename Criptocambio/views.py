@@ -1,12 +1,11 @@
 from .models import CriptoModel, Database, Transaccion
-
+from flask import Flask, render_template, request, abort
 
 APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 
-from flask import Flask, render_template, request, abort
-
 db = Database()
 app = Flask(__name__)
+
 
 @app.route('/')
 def home():
@@ -33,7 +32,7 @@ def consulta_resultado():
     crypto.consultar_cambio()
 
     cambio = round(crypto.cambio, 5)
-    return render_template("index.html", crypto=cambio)
+    return render_template("index.html", crypto=cambio, origen=origen, destino=destino)
 
 
 @app.post('/compra')
@@ -42,11 +41,16 @@ def compra():
     destino = request.form.get("destino")
     cantidad = request.form.get("cantidad")
 
-    db.guardar_transaccion(Transaccion(origen, destino, cantidad))
+    crypto = CriptoModel(origen, destino)
+    crypto.consultar_cambio()
+
+    db.guardar_transaccion(Transaccion(origen, destino, float(cantidad), crypto.cambio))
+    # TODO Validar entradas
 
     return f"{origen} {destino} {cantidad}"
 
-@app.post('/transacciones')
+
+@app.get('/transacciones')
 def transacciones():
     transacciones = db.conseguir_transacciones()
 
@@ -54,9 +58,11 @@ def transacciones():
     for tx in transacciones:
         s += f"{tx.origen} {tx.destino} {tx.cantidad} {tx.fecha}\n"
 
-    return s
+    saldos = db.conseguir_transacciones()
+    return render_template("transacciones.html", saldos=saldos)
+
 
 @app.route('/estado')
 def actualizar():
-    return "Muestra el estado de la inversion"
-
+    saldos = db.conseguir_cartera()
+    return render_template("estado.html", saldos=saldos)

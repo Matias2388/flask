@@ -46,10 +46,11 @@
 
             <br>
             <br>
-            {% if crypto %}
-                <h3>Cambio: {{ crypto }}</h3>
+                <h3>Cantidad:</h3>
                 <input type="number" name="cantidad">
                 <input type="submit" formaction="/compra" formmethod="post" value="Comprar">
+                {% if crypto %}
+                <h3>Cambio: {{ crypto }}</h3>
             {% endif %}
         </fieldset>
 
