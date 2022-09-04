@@ -19,7 +19,7 @@ header {
   }
   
   nav {
-    background-color: #19a187;
+
     color: white;
     height: 25px;
     line-height: 25px;
@@ -122,3 +122,16 @@ header {
     display: flex;
     align-items: center;
   }
+
+  
+ul{
+  list-style: none;
+justify-content: left
+}
+
+li,a{
+float: left;
+background-color: #243e63;
+margin-right: 10px;
+color: white;
+}

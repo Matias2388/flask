@@ -14,12 +14,26 @@ body{
 	width: 600px;
 }
 
+ul{
+    list-style: none;
+	justify-content: left
+}
+
+li,a{
+	float: left;
+	background-color: #243e63;
+	margin-right: 10px;
+	color: white;
+}
+
 table{
 	background-color: white;
 	text-align: left;
 	border-collapse: collapse;
 	width: 100%;
 }
+
+
 
 th, td{
 	padding: 20px;

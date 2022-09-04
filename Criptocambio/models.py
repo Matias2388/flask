@@ -61,9 +61,9 @@ class Transaccion:
     def __init__(self, origen, destino, cantidad, cambio):
         self.origen = origen
         self.destino = destino
-        self.cantidad = cantidad
+        self.cantidad_moneda_destino = cantidad
         self.fecha = datetime.datetime.now()
-        self.cambio = cambio
+        self.cambio_origen_a_destino = cambio
 
 
 class Saldo:
@@ -92,37 +92,39 @@ class Database:
 
     def guardar_transaccion(self, tx: Transaccion):
         cur = self.db.cursor()
-        cur.execute("INSERT INTO transacciones(origen, destino, cantidad, fecha) VALUES (?, ?, ?, ?)",
-                    (tx.origen, tx.destino, tx.cantidad, tx.fecha.timestamp()))
-
-        cur.execute("SELECT * FROM cartera WHERE moneda=?", (tx.destino,))
-        dest = cur.fetchone()
-        if dest:
-            cantidad = dest[2]
-            cantidad += tx.cantidad
-
-            cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (cantidad, tx.destino))
-        else:
-            cur.execute("INSERT INTO cartera(moneda, cantidad) VALUES (?, ?)", (tx.destino, tx.cantidad))
 
         cur.execute("SELECT * FROM cartera WHERE moneda=?", (tx.origen,))
-        origen = cur.fetchone()
-        if origen:
-            cantidad = origen[2]
+        if tx.origen != "EUR":
+            fila_origen = cur.fetchone()
+            if fila_origen:
+                saldo_origen = fila_origen[2]
 
-            cambio = tx.cantidad * tx.cambio
-            cantidad -= cambio
+                cantidad_venta_origen = tx.cantidad_moneda_destino * tx.cambio_origen_a_destino
+                saldo_origen -= cantidad_venta_origen
 
-            if cantidad < 0:
+                if saldo_origen < 0:
+                    raise APIError(
+                        "Moneda de origen sin saldo"
+                    )
+
+                cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (saldo_origen, tx.origen))
+            else:
                 raise APIError(
-                    "Moneda de origen sin saldo"
+                    "Moneda de origen no registrada"
                 )
 
-            cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (cantidad, tx.origen))
+        cur.execute("SELECT * FROM cartera WHERE moneda=?", (tx.destino,))
+        fila_dest = cur.fetchone()
+        if fila_dest:
+            saldo_origen = fila_dest[2]
+            saldo_origen += tx.cantidad_moneda_destino
+
+            cur.execute("UPDATE cartera SET cantidad=? WHERE moneda=?", (saldo_origen, tx.destino))
         else:
-            raise APIError(
-                "Moneda de origen no registrada"
-            )
+            cur.execute("INSERT INTO cartera(moneda, cantidad) VALUES (?, ?)", (tx.destino, tx.cantidad_moneda_destino))
+
+        cur.execute("INSERT INTO transacciones(origen, destino, cantidad, fecha) VALUES (?, ?, ?, ?)",
+                    (tx.origen, tx.destino, tx.cantidad_moneda_destino, tx.fecha.timestamp()))
 
         self.db.commit()
 

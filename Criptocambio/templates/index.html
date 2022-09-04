@@ -1,4 +1,4 @@
-<!--corresponde al template del formulario-->
+<!--corresponde a la tabla de movimentos-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,57 +6,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COMPRA DE CRIPTOs</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <title>TABLA DE COMPRA DE CRIPTOs</title>
+    <link rel="stylesheet" href="/static/css/tabla.css">
 </head>
-    <body>
-        <h1 class="titulo formulario">COMPRA DE CRIPTOs</h1>
-
-    <form action="/consulta" method="post">
-        <fieldset>
-            <legend>Introduciendo datos monedas</legend>
-            <label for="origen">Moneda origen</label>
-            <select id="origen" name="origen">
-                <option value="">-</option>
-                <option value="EUR">Euro</option>
-                <option value="BTC">Bitcoin</option>
-                <option value="ETH">ETH</option>
-                <option value="LINK">LINK</option>
-                <option value="LUNA">LUNA</option>
-                <option value="ATOM">ATOM</option>
-                <option value="SOL">SOL</option>
-                <option value="USDT">USDT</option>
-            </select>
-            <br>
-            <label for="destino">Moneda destino</label>
-            <select id="destino" name="destino">
-                <option value="">-</option>
-                <option value="EUR">Euro</option>
-                <option value="BTC">Bitcoin</option>
-                <option value="ETH">ETH</option>
-                <option value="LINK">LINK</option>
-                <option value="LUNA">LUNA</option>
-                <option value="ATOM">ATOM</option>
-                <option value="SOL">SOL</option>
-                <option value="USDT">USDT</option>
-            </select>
-            <br>
-            <input type="submit" value="Calcular">
-
-
-            <br>
-            <br>
-                <h3>Cantidad:</h3>
-                <input type="number" name="cantidad">
-                <input type="submit" formaction="/compra" formmethod="post" value="Comprar">
-                {% if crypto %}
-                <h3>Cambio: {{ crypto }}</h3>
-            {% endif %}
-        </fieldset>
-
-
-
-    </form>
+<body>
+    <header>
+        <nav class="menu">
+            <ul>
+                <li><a  href="/transacciones">Inicio</a></li>
+                <li><a href="/consulta">Compra</a></li>
+                <li><a href="estado">Estado</a></li>
+            </ul>
+        </nav>
+        <table>
+            <caption>Tabla de Movimientos</caption>
+            <thead>
+                <tr>
+                    <th>Moneda origen</th>
+                    <th>Moneda destino</th>
+                    <th>Cantidad</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+        </table>
+	</header>
 </body>
 </html>
-
