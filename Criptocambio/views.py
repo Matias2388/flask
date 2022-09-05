@@ -35,7 +35,7 @@ def consulta_resultado():
     return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
 
 
-@app.post('/compra')
+@app.post('/compra') # Guardando datos que provienen del Formulario
 def compra():
     # TODO Validar entradas
     origen = request.form.get("origen")
@@ -52,8 +52,8 @@ def compra():
     crypto = CriptoModel(origen, destino)
     crypto.consultar_cambio()
 
-    tx = Transaccion(origen, destino, float(cantidad), crypto.cambio)
-    db.guardar_transaccion(tx)
+    tx = Transaccion(origen, destino, float(cantidad), crypto.cambio) # Guardando todos los valores en clase Transaccion
+    db.guardar_transaccion(tx) # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
 
     return f"{origen} {destino} {cantidad}"
 

@@ -72,6 +72,7 @@ class Saldo:
         self.cantidad = cantidad
 
 class Database: 
+
     def __init__(self):
         self.db = sqlite3.connect("database.db", check_same_thread=False)
         self.db.execute("""CREATE TABLE IF NOT EXISTS transacciones (
