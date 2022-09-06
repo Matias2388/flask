@@ -7,6 +7,14 @@ db = Database()
 app = Flask(__name__)
 
 
+
+# TODO
+# Botón de compra en /consulta
+# Guardar cantidad de moneda de origen gastada en /comprar en la tabla 'transacciones'
+# Validar datos
+# Manejar errores
+
+
 @app.route('/')
 def home():
     """
@@ -17,25 +25,32 @@ def home():
 
 @app.get('/consulta')
 def consulta_inicio():
+    origen = request.args.get("origen")
+    destino = request.args.get("destino")
+    cantidad_origen = request.args.get("cantidad")
+
+    if origen and destino:
+        crypto = CriptoModel(origen, destino)
+        crypto.consultar_cambio()
+
+        cambio = round(crypto.cambio, 5)
+
+        if cantidad_origen:
+            cantidad_origen = float(cantidad_origen)
+            cantidad_destino = cantidad_origen * cambio
+            return render_template("form.html",
+                                   crypto=cambio,
+                                   origen=origen,
+                                   destino=destino,
+                                   cantidad_origen=cantidad_origen,
+                                   cantidad_destino=cantidad_destino)
+
+        return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
+
     return render_template("form.html")
 
 
-@app.post('/consulta')
-def consulta_resultado():
-    origen = request.form.get("origen")
-    destino = request.form.get("destino")
-
-    if not origen or not destino:
-        abort(400)
-
-    crypto = CriptoModel(origen, destino)
-    crypto.consultar_cambio()
-
-    cambio = round(crypto.cambio, 5)
-    return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
-
-
-@app.post('/compra') # Guardando datos que provienen del Formulario
+@app.post('/compra')  # Guardando datos que provienen del Formulario
 def compra():
     # TODO Validar entradas
     origen = request.form.get("origen")
@@ -52,22 +67,11 @@ def compra():
     crypto = CriptoModel(origen, destino)
     crypto.consultar_cambio()
 
-    tx = Transaccion(origen, destino, float(cantidad), crypto.cambio) # Guardando todos los valores en clase Transaccion
-    db.guardar_transaccion(tx) # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
+    tx = Transaccion(origen, destino, float(cantidad),
+                     crypto.cambio)  # Guardando todos los valores en clase Transaccion
+    db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
 
     return f"{origen} {destino} {cantidad}"
-
-
-@app.get('/transacciones')
-def transacciones():
-    transacciones = db.conseguir_transacciones()
-
-    s = ""
-    for tx in transacciones:
-        s += f"{tx.origen} {tx.destino} {tx.cantidad_moneda_destino} {tx.fecha}\n"
-
-    saldos = db.conseguir_transacciones()
-    return render_template("transacciones.html", saldos=saldos)
 
 
 @app.route('/estado')

@@ -4,8 +4,9 @@
 	Color borde: 0F362D;
 	Color iluminado: 369681;
 */
+
 body{
-	background-color: #243e63;
+	background-color: #160552;
 	font-family: Arial;
 }
 
@@ -30,7 +31,7 @@ table{
 	background-color: white;
 	text-align: left;
 	border-collapse: collapse;
-	width: 100%;
+	width: 70%;
 }
 
 
@@ -42,7 +43,7 @@ th, td{
 
 caption {
   text-align: center;
-  color: white;
+  color: rgb(168, 101, 6);
   font-size: 50px;
 }
 
@@ -57,7 +58,7 @@ tr:nth-child(even){
 }
 
 tr:hover td{
-	background-color: #0b0a68;
+	background-color: #3b3a64;
 	color: white;
 }
 

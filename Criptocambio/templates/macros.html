@@ -1,0 +1,19 @@
+{% macro menu(pagina_actual) %}
+<header>
+<nav class="menu">
+    <ul>
+        {% if pagina_actual != "index.html" %}
+        <li><a  href="/">Inicio</a></li>
+        {% endif %}
+
+        {% if pagina_actual != "form.html" %}
+        <li><a href="/consulta">Compra</a></li>
+        {% endif %}
+
+        {% if pagina_actual != "estado.html" %}
+        <li><a href="/estado">Estado</a></li>
+        {% endif %}
+    </ul>
+</nav>
+</header>
+{% endmacro %}

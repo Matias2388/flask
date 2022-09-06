@@ -1,7 +1,9 @@
 <!--corresponde a la tabla de movimentos-->
 
+{% from 'macros.html' import menu %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,25 +12,28 @@
     <link rel="stylesheet" href="/static/css/tabla.css">
 </head>
 <body>
-    <header>
-        <nav class="menu">
-            <ul>
-                <li><a  href="/transacciones">Inicio</a></li>
-                <li><a href="/consulta">Compra</a></li>
-                <li><a href="estado">Estado</a></li>
-            </ul>
-        </nav>
-        <table>
-            <caption>Tabla de Movimientos</caption>
-            <thead>
-                <tr>
-                    <th>Moneda origen</th>
-                    <th>Moneda destino</th>
-                    <th>Cantidad</th>
-                    <th>Fecha</th>
-                </tr>
-            </thead>
-        </table>
-	</header>
+{{ menu(self._TemplateReference__context.name) }}
+
+<table>
+    <caption>Tabla de Movimientos</caption>
+    <thead>
+    <tr>
+        <th>Moneda origen</th>
+        <th>Moneda destino</th>
+        <th>Cantidad</th>
+        <th>Fecha</th>
+    </tr>
+    </thead>
+
+    {% for tx in transacciones %}
+        <tr>
+            <td>{{ tx.origen }}</td>
+            <td>{{ tx.destino }}</td>
+            <td>{{ tx.cantidad_moneda_destino }}</td>
+            <td>{{ tx.fecha.strftime("%x %X") }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
 </body>
 </html>

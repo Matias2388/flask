@@ -40,7 +40,7 @@ class CriptoModel:
         return
 
         cabeceras = {
-            "X-CoinAPI-Key": APIKEY
+            "X-CoinAPI-Key": dotenv.dotenv_values().get("APIKEY")
         }
 
         url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
@@ -48,7 +48,7 @@ class CriptoModel:
 
         if respuesta.status_code == 200:
             # guardo el cambio obtenido
-            self.cambio = respuesta.json()["rate"]
+            self.cambio_origen_a_destino = respuesta.json()["rate"]
         else:
             raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
@@ -71,8 +71,8 @@ class Saldo:
         self.moneda = moneda
         self.cantidad = cantidad
 
-class Database: 
 
+class Database:
     def __init__(self):
         self.db = sqlite3.connect("database.db", check_same_thread=False)
         self.db.execute("""CREATE TABLE IF NOT EXISTS transacciones (
