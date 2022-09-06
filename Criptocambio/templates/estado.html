@@ -1,21 +1,16 @@
+{% from 'macros.html' import menu %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Estado</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/tabla.css">
 </head>
 <body>
-    <h1 class="titulo_formulario">Estado de la inversion</h1>
-</body>
-<nav class="menu">
-    <ul>
-        <li><a  href="/">Inicio</a></li>
-        <li><a href="/consulta">Compra</a></li>
-        <li><a href="estado">Estado</a></li>
-    </ul>
-</nav>
+    {{ menu(self._TemplateReference__context.name) }}
+    
     <table>
+        <caption>Estado de la inversion</caption>
         <tr>
             <th>Moneda</th>
             <th>Cantidad</th>
@@ -27,6 +22,5 @@
         </tr>
         {% endfor %}
     </table>
-</head>
-
+</body>
 </html>

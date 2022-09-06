@@ -32,6 +32,7 @@ table{
 	text-align: left;
 	border-collapse: collapse;
 	width: 70%;
+	
 }
 
 
@@ -41,7 +42,7 @@ th, td{
     
 }
 
-caption {
+caption,h1 {
   text-align: center;
   color: rgb(168, 101, 6);
   font-size: 50px;
