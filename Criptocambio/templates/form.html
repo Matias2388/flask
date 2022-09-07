@@ -12,10 +12,10 @@
 </head>
 <body>
 {{ menu(self._TemplateReference__context.name) }}
+<table>
 <h1 class="titulo_formulario">COMPRA DE CRIPTOs</h1>
-
 <form action="/consulta" method="get">
-    <fieldset>
+    
         <label for="origen">Moneda origen</label>
         <select id="origen" name="origen">
             <option value="">-</option>
@@ -58,8 +58,8 @@
         {% if cantidad_origen %}
             <h3>{{ cantidad_origen }} {{ origen }} = {{ cantidad_destino }} {{ destino }}</h3>
         {% endif %}
-    </fieldset>
 </form>
+</table>
 </body>
 </html>
 

@@ -148,4 +148,11 @@ margin-right: 10px;
 color: white;
 }
 
+table{
+	background-color: white;
+	text-align: left;
+	border-collapse: collapse;
+	width: 70%;
+	
+}
 
