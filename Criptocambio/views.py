@@ -1,5 +1,5 @@
 from .models import CriptoModel, Database, Transaccion
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template, request, abort, redirect
 
 APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 
@@ -20,34 +20,42 @@ def home():
     """
     Muestra la lista/tabla de movimientos cargados.
     """
-    return render_template("index.html", transacciones=db.conseguir_transacciones())
+    transacciones = db.conseguir_transacciones()
+    transacciones.reverse()
+
+    return render_template("index.html", transacciones=transacciones)
 
 
 @app.get('/consulta')
 def consulta_inicio():
-    origen = request.args.get("origen")
-    destino = request.args.get("destino")
-    cantidad_origen = request.args.get("cantidad")
+    try:
+        origen = request.args.get("origen")
+        destino = request.args.get("destino")
+        cantidad_origen = request.args.get("cantidad")
 
-    if origen and destino:
-        crypto = CriptoModel(origen, destino)
-        crypto.consultar_cambio()
+        if origen and destino:
+            crypto = CriptoModel(origen, destino)
+            crypto.consultar_cambio()
 
-        cambio = round(crypto.cambio, 5)
+            cambio = round(crypto.cambio, 5)
 
-        if cantidad_origen:
-            cantidad_origen = float(cantidad_origen)
-            cantidad_destino = cantidad_origen * cambio
-            return render_template("form.html",
-                                   crypto=cambio,
-                                   origen=origen,
-                                   destino=destino,
-                                   cantidad_origen=cantidad_origen,
-                                   cantidad_destino=cantidad_destino)
+            if cantidad_origen:
+                cantidad_origen = float(cantidad_origen)
+                cantidad_destino = cantidad_origen * cambio
+                return render_template("form.html",
+                                       crypto=cambio,
+                                       origen=origen,
+                                       destino=destino,
+                                       cantidad_origen=cantidad_origen,
+                                       cantidad_destino=cantidad_destino)
 
-        return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
+            return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
 
-    return render_template("form.html")
+        return render_template("form.html")
+    except ValueError:
+        return render_template("error.html", mensaje="Valor invalido: Error de conversión")
+    except Exception:
+        return render_template("error.html", mensaje="Error desconocido")
 
 
 @app.post('/compra')  # Guardando datos que provienen del Formulario
@@ -57,7 +65,6 @@ def compra():
     destino = request.form.get("destino")
     cantidad = request.form.get("cantidad")
 
-    # TODO Validar que sea EUR->BTC, BTC->Crypto, Crypto->BTC o BTC->EUR
     if origen == "EUR" and destino != "BTC":
         APIError("Solo se permite comprar BTC con EUR")
 
@@ -71,7 +78,7 @@ def compra():
                      crypto.cambio)  # Guardando todos los valores en clase Transaccion
     db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
 
-    return f"{origen} {destino} {cantidad}"
+    return redirect("/")
 
 
 @app.route('/estado')

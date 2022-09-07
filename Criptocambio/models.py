@@ -61,9 +61,13 @@ class Transaccion:
     def __init__(self, origen, destino, cantidad, cambio):
         self.origen = origen
         self.destino = destino
-        self.cantidad_moneda_destino = cantidad
         self.fecha = datetime.datetime.now()
+
+        self.cantidad_moneda_destino = cantidad
         self.cambio_origen_a_destino = cambio
+
+        if cambio:
+            self.cantidad_moneda_origen = round(cantidad / cambio, 3)
 
 
 class Saldo:
@@ -78,8 +82,9 @@ class Database:
         self.db.execute("""CREATE TABLE IF NOT EXISTS transacciones (
             id integer PRIMARY KEY,
             origen text,
+            cantidad_origen text,
             destino text,
-            cantidad integer,
+            cantidad_destino text,
             fecha text
         );""")
 
@@ -124,8 +129,8 @@ class Database:
         else:
             cur.execute("INSERT INTO cartera(moneda, cantidad) VALUES (?, ?)", (tx.destino, tx.cantidad_moneda_destino))
 
-        cur.execute("INSERT INTO transacciones(origen, destino, cantidad, fecha) VALUES (?, ?, ?, ?)",
-                    (tx.origen, tx.destino, tx.cantidad_moneda_destino, tx.fecha.timestamp()))
+        cur.execute("INSERT INTO transacciones(origen, cantidad_origen, destino, cantidad_destino, fecha) VALUES (?, ?, ?, ?, ?)",
+                    (tx.origen, tx.cantidad_moneda_origen, tx.destino, tx.cantidad_moneda_destino, tx.fecha.timestamp()))
 
         self.db.commit()
 
@@ -135,8 +140,10 @@ class Database:
 
         data = []
         for fila in cur.fetchall():
-            tx = Transaccion(fila[1], fila[2], fila[3], 0)
+
+            tx = Transaccion(fila[1], fila[3], fila[4], 0)
             tx.fecha = datetime.datetime.fromtimestamp(float(fila[4]))
+            tx.cantidad_moneda_origen = fila[2]
 
             data.append(tx)
 

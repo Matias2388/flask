@@ -18,18 +18,16 @@
     <caption>Tabla de Movimientos</caption>
     <thead>
     <tr>
-        <th>Moneda origen</th>
-        <th>Moneda destino</th>
-        <th>Cantidad</th>
+        <th>Origen</th>
+        <th>Destino</th>
         <th>Fecha</th>
     </tr>
     </thead>
 
     {% for tx in transacciones %}
         <tr>
-            <td>{{ tx.origen }}</td>
-            <td>{{ tx.destino }}</td>
-            <td>{{ tx.cantidad_moneda_destino }}</td>
+            <td>{{ tx.origen }} {{ tx.cantidad_moneda_origen }}</td>
+            <td>{{ tx.destino }} {{ tx.cantidad_moneda_destino }}</td>
             <td>{{ tx.fecha.strftime("%x %X") }}</td>
         </tr>
     {% endfor %}
