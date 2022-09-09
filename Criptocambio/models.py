@@ -3,6 +3,7 @@ import random
 import sqlite3
 from typing import List
 
+
 import requests
 
 from .import APIKEY
@@ -35,27 +36,30 @@ class CriptoModel:
         Consulta el cambio entre la moneda origen y la moneda destino
         utilizando la API REST CoinAPI.
         """
+        try:
+            self.cambio = random.random()
+            return
 
-        self.cambio = random.random()
-        return
-
-        cabeceras = {
+            cabeceras = {
             "X-CoinAPI-Key": dotenv.dotenv_values().get("APIKEY")
-        }
+            }
 
-        url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
-        respuesta = requests.get(url, headers=cabeceras)
+            url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
+            respuesta = requests.get(url, headers=cabeceras)
 
-        if respuesta.status_code == 200:
+            if respuesta.status_code == 200:
             # guardo el cambio obtenido
-            self.cambio_origen_a_destino = respuesta.json()["rate"]
-        else:
-            raise APIError(
+               self.cambio_origen_a_destino = respuesta.json()["rate"]
+            else:
+                raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
                     respuesta.status_code, respuesta.reason
                 )
             )
-
+        except ValueError:
+            return render_template("error.html", mensaje="Error al llamar a la API")
+        except Exception:
+            return render_template("error.html", mensaje="Error desconocido")
 
 class Transaccion:
     def __init__(self, origen, destino, cantidad, cambio):

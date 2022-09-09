@@ -1,6 +1,9 @@
+from email import message
+from tokenize import Intnumber
+from wsgiref.validate import validator
 from .models import CriptoModel, Database, Transaccion
 from flask import Flask, render_template, request, abort, redirect
-
+from wtforms.validators import DataRequired, Length
 APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 
 db = Database()
@@ -60,10 +63,10 @@ def consulta_inicio():
 
 @app.post('/compra')  # Guardando datos que provienen del Formulario
 def compra():
-    # TODO Validar entradas
-    origen = request.form.get("origen")
+    origen = request.form.get("origen") 
     destino = request.form.get("destino")
-    cantidad = request.form.get("cantidad")
+    cantidad = request.form.get("cantidad")    #cantidad = Intnumber("Cantidad", validators=[DataRequired(message="Debes especificar un número")])
+     
 
     if origen == "EUR" and destino != "BTC":
         APIError("Solo se permite comprar BTC con EUR")
@@ -79,6 +82,7 @@ def compra():
     db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
 
     return redirect("/")
+    
 
 
 @app.route('/estado')
