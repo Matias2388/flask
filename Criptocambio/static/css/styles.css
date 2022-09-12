@@ -60,6 +60,17 @@ header {
     text-align: left;
   }
   
+  form{
+    width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  }
+
+
   .numero,
   .acciones {
     text-align: right;
@@ -148,6 +159,7 @@ margin-right: 10px;
 color: white;
 }
 
+
 table{
 	background-color: white;
 	text-align: left;
@@ -155,4 +167,3 @@ table{
 	width: 70%;
 	
 }
-

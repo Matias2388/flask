@@ -36,30 +36,27 @@ class CriptoModel:
         Consulta el cambio entre la moneda origen y la moneda destino
         utilizando la API REST CoinAPI.
         """
-        try:
-            self.cambio = random.random()
-            return
 
-            cabeceras = {
+        self.cambio = random.random()
+        return
+
+        cabeceras = {
             "X-CoinAPI-Key": dotenv.dotenv_values().get("APIKEY")
-            }
+        }
 
-            url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
-            respuesta = requests.get(url, headers=cabeceras)
+        url = f"http://rest.coinapi.io/v1/exchangerate/{self.moneda_origen}/{self.moneda_destino}"
+        respuesta = requests.get(url, headers=cabeceras)
 
-            if respuesta.status_code == 200:
+        if respuesta.status_code == 200:
             # guardo el cambio obtenido
-               self.cambio_origen_a_destino = respuesta.json()["rate"]
-            else:
-                raise APIError(
+            self.cambio_origen_a_destino = respuesta.json()["rate"]
+        else:
+            raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
                     respuesta.status_code, respuesta.reason
                 )
             )
-        except ValueError:
-            return render_template("error.html", mensaje="Error al llamar a la API")
-        except Exception:
-            return render_template("error.html", mensaje="Error desconocido")
+
 
 class Transaccion:
     def __init__(self, origen, destino, cantidad, cambio):
@@ -86,9 +83,9 @@ class Database:
         self.db.execute("""CREATE TABLE IF NOT EXISTS transacciones (
             id integer PRIMARY KEY,
             origen text,
-            cantidad_origen text,
+            cantidad_origen integer,
             destino text,
-            cantidad_destino text,
+            cantidad_destino integer,
             fecha text
         );""")
 
@@ -133,8 +130,9 @@ class Database:
         else:
             cur.execute("INSERT INTO cartera(moneda, cantidad) VALUES (?, ?)", (tx.destino, tx.cantidad_moneda_destino))
 
-        cur.execute("INSERT INTO transacciones(origen, cantidad_origen, destino, cantidad_destino, fecha) VALUES (?, ?, ?, ?, ?)",
-                    (tx.origen, tx.cantidad_moneda_origen, tx.destino, tx.cantidad_moneda_destino, tx.fecha.timestamp()))
+        cur.execute(
+            "INSERT INTO transacciones(origen, cantidad_origen, destino, cantidad_destino, fecha) VALUES (?, ?, ?, ?, ?)",
+            (tx.origen, tx.cantidad_moneda_origen, tx.destino, tx.cantidad_moneda_destino, tx.fecha.timestamp()))
 
         self.db.commit()
 
@@ -144,9 +142,8 @@ class Database:
 
         data = []
         for fila in cur.fetchall():
-
             tx = Transaccion(fila[1], fila[3], fila[4], 0)
-            tx.fecha = datetime.datetime.fromtimestamp(float(fila[4]))
+            tx.fecha = datetime.datetime.fromtimestamp(float(fila[5]))
             tx.cantidad_moneda_origen = fila[2]
 
             data.append(tx)
@@ -163,3 +160,23 @@ class Database:
             data.append(saldo)
 
         return data
+
+    def conseguir_suma_eur_origen(self):
+        cur = self.db.cursor()
+        cur.execute("SELECT cantidad_origen FROM transacciones WHERE origen='EUR'")
+
+        suma = 0
+        for fila in cur.fetchall():
+            suma += fila[0]
+
+        return suma
+
+    def conseguir_suma_eur_destino(self):
+        cur = self.db.cursor()
+        cur.execute("SELECT cantidad_destino FROM transacciones WHERE destino='EUR'")
+
+        suma = 0
+        for fila in cur.fetchall():
+            suma += fila[0]
+
+        return suma
