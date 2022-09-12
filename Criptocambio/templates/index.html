@@ -13,7 +13,6 @@
 </head>
 <body>
 {{ menu(self._TemplateReference__context.name) }}
-
 <table>
     <caption>Tabla de Movimientos</caption>
     <thead>
@@ -23,7 +22,6 @@
         <th>Fecha</th>
     </tr>
     </thead>
-
     {% for tx in transacciones %}
         <tr>
             <td>{{ tx.origen }} {{ tx.cantidad_moneda_origen }}</td>
@@ -33,5 +31,6 @@
     {% endfor %}
 
 </table>
+<footer class="pie-de-pagina">2022 Bootcamp Cero.</footer>
 </body>
 </html>

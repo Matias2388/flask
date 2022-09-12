@@ -4,12 +4,17 @@
 	Color borde: 0F362D;
 	Color iluminado: 369681;
 */
-
+/*
 body{
 	background-color: #160552;
 	font-family: Arial;
 }
-
+*/
+body {
+	font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	background-color: #19191d;
+	font-weight: 300; }
+  
 #main-container{
 	margin: 150px auto;
 	width: 600px;
@@ -22,35 +27,33 @@ ul{
 
 li,a{
 	float: left;
-	background-color: #243e63;
+	background-color: #19191d;
 	margin-right: 10px;
 	color: white;
 }
 
+caption{
+	text-align: left;
+	color: rgb(168, 101, 6);
+	font-size: 20px;
+  }
+
 table{
 	background-color: white;
-	text-align: left;
+	text-align: center;
 	border-collapse: collapse;
 	width: 70%;
-	
+	border: 0px ridge #242f63;
+	box-shadow: #ecedf0;
 }
-
-
 
 th, td{
 	padding: 20px;
-    
-}
-
-caption,h1 {
-  text-align: center;
-  color: rgb(168, 101, 6);
-  font-size: 50px;
 }
 
 thead{
-	background-color: #242f63;
-	border-bottom: solid 5px #0c084b;
+	background-color: #2e2e36;
+	border-bottom:solid 4px #19191d;
 	color: white;
 }
 
@@ -66,3 +69,11 @@ tr:hover td{
 .nueva_compra,.estado{
 	color: white;
 }
+
+.pie-de-pagina {
+	margin-top: 40px;
+	size: 0.5px;
+	color: #ddd;
+	padding: 5px;
+	border-top: solid 1px #ddd;
+  }
