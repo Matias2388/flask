@@ -43,14 +43,10 @@
         </select>
         <br>
         <input type="submit" value="Calcular">
-
-        <br>
+        
         {% if crypto %}
-            <h4>Cambio: {{ crypto }}</h4>
-
-        <br>
-        <br>
-        <h3>Cantidad:</h3>
+            <h2>Cambio: {{ crypto }}</h2>
+        <h3>Cantidad Moneda Origen:</h3>
         <input type="number" name="cantidad" value={{ cantidad_origen }}>
         <input type="submit" formaction="/consulta" formmethod="get" value="Calcular">
         {% endif %}
@@ -59,5 +55,6 @@
             <input type="submit" value="Confirmar" formaction="/compra" formmethod="post">
         {% endif %}
 </form>
+<footer class="pie-de-pagina">2022 Bootcamp Cero.</footer>
 </body>
 </html>

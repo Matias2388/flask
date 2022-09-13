@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Estado</title>
-    <link rel="stylesheet" href="/static/css/tabla.css">
+    <link rel="stylesheet" href="/static/css/estado.css">
 </head>
 <body>
-    {{ menu(self._TemplateReference__context.name) }}
-    
-    <table>
+    {{ menu(self._TemplateReference__context.name) }}s
+    <div class="tabla-estado">
+    <table >
         <caption>Estado de la inversión</caption>
         <tr>
             <th>Moneda</th>
@@ -22,8 +22,9 @@
         </tr>
         {% endfor %}
     </table>
-    
+</div>
     <br>
+    <div class="tabla-detalle">
     <table>
         <caption>Detalle</caption>
         <tr>
@@ -47,5 +48,7 @@
             <td>{{ valor_actual }} EUR</td>
         </tr>
     </table>
+    </div>
+    <footer class="pie-de-pagina">2022 Bootcamp Cero.</footer>
 </body>
 </html>

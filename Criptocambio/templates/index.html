@@ -19,7 +19,7 @@
     <tr>
         <th>Origen</th>
         <th>Destino</th>
-        <th>Fecha</th>
+        <th>Fecha/Hora</th>
     </tr>
     </thead>
     {% for tx in transacciones %}
@@ -29,7 +29,6 @@
             <td>{{ tx.fecha.strftime("%x %X") }}</td>
         </tr>
     {% endfor %}
-
 </table>
 <footer class="pie-de-pagina">2022 Bootcamp Cero.</footer>
 </body>

@@ -1,14 +1,4 @@
-/*
-header {
-    align-items: center;
-    background-color: #b8174c;
-    color: white;
-    height: 50px;
-    font-size: large;
-    line-height: 50px;
-    padding-left: 25px;
-  }
-  */
+
   head{
     background-color: #242f63;
     border-bottom: solid 5px #0c084b;
@@ -18,23 +8,27 @@ header {
   h1 {
     text-align: center;
     color: rgb(168, 101, 6);
-    font-size: 50px;
+    font-size: 30px;
+ }
+ 
+ h2{
+  font-size: 20px;
+
  }
 
   body{
-    background-color: #160552;
-	  font-family: Arial; 
-   
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    background-color: #19191d;
+    font-weight: 400;
   }
 
   .titulo{
     text-align: center;
     color: white;
-    font-size: 50px;
+    font-size: 40px;
   }
   
   nav {
-
     color: white;
     height: 25px;
     line-height: 25px;
@@ -54,22 +48,17 @@ header {
   table.paper {
     width: 100%;
   }
-  
-  .titulo-tabla {
-    border-bottom: #19a187 1px solid;
-    text-align: left;
-  }
-  
+
   form{
-    width: 100%;
+  width: 100%;
   max-width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 5px
   }
-
 
   .numero,
   .acciones {
@@ -83,11 +72,9 @@ header {
     padding: 0 2px;
   }
   
+  h2,h3,h4{
+    color: #ddd;
 
-  .pie-de-pagina {
-    margin-top: 40px;
-    padding: 20px;
-    border-top: solid 1px #b8174c;
   }
   
   .lista-vacia {
@@ -119,16 +106,7 @@ header {
     width: 100%;
   }
   
-  .lista-errores {
-    background-color: rgba(200, 0, 0, .25);
-    color: darkred;
-    border: solid 2px darkred;
-    padding: 2rem;
-    font-size: 1rem;
-    margin: 1rem 0;
-    display: flex;
-    align-items: center;
-  }
+
   
   .icono-error {
     margin-right: 1rem;
@@ -167,3 +145,23 @@ table{
 	width: 70%;
 	
 }
+
+.pie-de-pagina {
+	margin-top: 40px;
+	color: #ddd;
+	padding: 5px;
+	border-top: solid 1px #ddd;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+  }
+
+  li,a{
+    float: left;
+    background-color: #19191d;
+    margin-right: 10px;
+    color: white;
+  }
+
+  
