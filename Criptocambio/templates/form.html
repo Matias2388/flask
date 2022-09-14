@@ -47,7 +47,7 @@
         {% if crypto %}
             <h2>Cambio: {{ crypto }}</h2>
         <h3>Cantidad Moneda Origen:</h3>
-        <input type="number" name="cantidad" value={{ cantidad_origen }}>
+        <input type="number" step="any" name="cantidad" value={{ cantidad_origen }}>
         <input type="submit" formaction="/consulta" formmethod="get" value="Calcular">
         {% endif %}
         {% if cantidad_origen %}

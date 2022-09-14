@@ -37,7 +37,7 @@ class CriptoModel:
         utilizando la API REST CoinAPI.
         """
 
-        self.cambio = random.random()
+        self.cambio= random.random()
         return
 
         cabeceras = {
@@ -49,7 +49,7 @@ class CriptoModel:
 
         if respuesta.status_code == 200:
             # guardo el cambio obtenido
-            self.cambio_origen_a_destino = respuesta.json()["rate"]
+            self.cambio = respuesta.json()["rate"]
         else:
             raise APIError(
                 "Ha ocurrido un error {} {} al consultar la API.".format(
@@ -59,16 +59,16 @@ class CriptoModel:
 
 
 class Transaccion:
-    def __init__(self, origen, destino, cantidad, cambio):
+     def __init__(self, origen, destino, cantidad_destino, cambio):
         self.origen = origen
         self.destino = destino
         self.fecha = datetime.datetime.now()
 
-        self.cantidad_moneda_destino = cantidad
+        self.cantidad_moneda_destino = cantidad_destino
         self.cambio_origen_a_destino = cambio
 
         if cambio:
-            self.cantidad_moneda_origen = round(cantidad / cambio, 3)
+            self.cantidad_moneda_origen = round(cantidad_destino / cambio, 3)
 
 
 class Saldo:

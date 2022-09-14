@@ -69,10 +69,10 @@ def compra():
     try:
         origen = request.form.get("origen")
         destino = request.form.get("destino")
-        cantidad = request.form.get(
+        cantidad_origen = request.form.get(
             "cantidad")  # cantidad = Intnumber("Cantidad", validators=[DataRequired(message="Debes especificar un número")])
 
-        if not origen or not destino or not cantidad:
+        if not origen or not destino or not cantidad_origen:
             raise APIError("Transacción inválida")
 
         if origen == destino:
@@ -87,8 +87,9 @@ def compra():
         crypto = CriptoModel(origen, destino)
         crypto.consultar_cambio()
 
-        tx = Transaccion(origen, destino, float(cantidad),
-                         crypto.cambio)  # Guardando todos los valores en clase Transaccion
+        tx = Transaccion(origen, destino, crypto.cambio_origen_a_destino * float(cantidad_origen), crypto.cambio_origen_a_destino)  # Guardando todos los valores en clase Transaccion
+        tx.cantidad_moneda_origen = float(cantidad_origen)
+
         db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
 
         return redirect("/")
@@ -109,7 +110,7 @@ def actualizar():
 
             inversion_atrapada_eur += saldo.cantidad * crypto.cambio
 
-        # Cantidad de EUR invertidos
+          # Cantidad de EUR invertidos
         inversion_eur = db.conseguir_suma_eur_origen()
 
         # Cantidad de EUR retornados
@@ -120,14 +121,11 @@ def actualizar():
         # Valor actual: será Total de euros invertidos + Saldo de euros invertidos (ganancia/
         # perdida) + Valor de euros de nuestras criptos (inversión atrapada)
 
-        valor_actual = inversion_eur + ganancia + inversion_atrapada_eur
+        valor_actual = inversion_eur + inversion_atrapada_eur + ganancia
 
         return render_template("estado.html",
                                saldos=saldos,
-                               inversion_atrapada_eur=round(inversion_atrapada_eur, 3),
-                               inversion_eur=inversion_eur,
-                               retorno_eur=retorno_eur,
-                               ganancia=ganancia,
+                               inversion_eur=round(inversion_eur, 3),
                                valor_actual=round(valor_actual, 3))
     except Exception as e:
         return render_template("error.html", mensaje=f"Error desconocido: {str(e)}")
