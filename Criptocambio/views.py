@@ -40,8 +40,8 @@ def consulta_inicio():
 
             crypto = CriptoModel(origen, destino)
             crypto.consultar_cambio()
-
-            cambio = round(crypto.cambio, 5)
+        
+            cambio = crypto.round(crypto.cambio, 5)
 
             if cantidad_origen:
                 cantidad_origen = float(cantidad_origen)
@@ -54,7 +54,6 @@ def consulta_inicio():
                                        cantidad_destino=cantidad_destino)
 
             return render_template("form.html", crypto=cambio, origen=origen, destino=destino)
-
         return render_template("form.html")
     except ValueError:
         return render_template("error.html", mensaje="Valor invalido: Error de conversión")
@@ -87,7 +86,7 @@ def compra():
         crypto = CriptoModel(origen, destino)
         crypto.consultar_cambio()
 
-        tx = Transaccion(origen, destino, crypto.cambio_origen_a_destino * float(cantidad_origen), crypto.cambio_origen_a_destino)  # Guardando todos los valores en clase Transaccion
+        tx = Transaccion(origen, destino, crypto.cambio * float(cantidad_origen), crypto.cambio_origen_a_destino)  # Guardando todos los valores en clase Transaccion
         tx.cantidad_moneda_origen = float(cantidad_origen)
 
         db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
