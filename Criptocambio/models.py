@@ -2,13 +2,11 @@ import datetime
 import random
 import sqlite3
 from typing import List
-
-
+import dotenv
 import requests
 
-from .import APIKEY
+#from .import APIKEY
 #APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
-
 
 class APIError(Exception):
     pass
@@ -36,10 +34,14 @@ class CriptoModel:
         Consulta el cambio entre la moneda origen y la moneda destino
         utilizando la API REST CoinAPI.
         """
-
-        self.cambio= random.random()
-        return
-
+        # TODO QUITARRRRRRRRRRRRR
+        # TODO QUITARRRRRRRRRRRRR
+        # TODO QUITARRRRRRRRRRRRR
+        # TODO QUITARRRRRRRRRRRRR
+        # TODO QUITARRRRRRRRRRRRR
+        #self.cambio = random.random()
+        #return
+        
         cabeceras = {
             "X-CoinAPI-Key": dotenv.dotenv_values().get("APIKEY")
         }
@@ -59,7 +61,7 @@ class CriptoModel:
 
 
 class Transaccion:
-     def __init__(self, origen, destino, cantidad_destino, cambio):
+    def __init__(self, origen, destino, cantidad_destino, cambio):
         self.origen = origen
         self.destino = destino
         self.fecha = datetime.datetime.now()

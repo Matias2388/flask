@@ -1,14 +1,10 @@
-
+from . import app
 from .models import CriptoModel, Database, Transaccion
-from flask import Flask, render_template, request, abort, redirect
-APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
+from flask import Flask, render_template, request, redirect
+#APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
 
 db = Database()
-app = Flask(__name__)
-
-
-# TODO
-# Centrar tabla estados
+#app = Flask(__name__)
 
 @app.route('/')
 def home():
@@ -40,8 +36,8 @@ def consulta_inicio():
 
             crypto = CriptoModel(origen, destino)
             crypto.consultar_cambio()
-        
-            cambio = crypto.round(crypto.cambio, 5)
+
+            cambio = crypto.cambio
 
             if cantidad_origen:
                 cantidad_origen = float(cantidad_origen)
@@ -86,7 +82,8 @@ def compra():
         crypto = CriptoModel(origen, destino)
         crypto.consultar_cambio()
 
-        tx = Transaccion(origen, destino, crypto.cambio * float(cantidad_origen), crypto.cambio_origen_a_destino)  # Guardando todos los valores en clase Transaccion
+        tx = Transaccion(origen, destino, crypto.cambio * float(cantidad_origen),
+                         crypto.cambio)  # Guardando todos los valores en clase Transaccion
         tx.cantidad_moneda_origen = float(cantidad_origen)
 
         db.guardar_transaccion(tx)  # Guardar datos en funcion guardar_transaccion" desde clase Database (db)
@@ -109,7 +106,7 @@ def actualizar():
 
             inversion_atrapada_eur += saldo.cantidad * crypto.cambio
 
-          # Cantidad de EUR invertidos
+        # Cantidad de EUR invertidos
         inversion_eur = db.conseguir_suma_eur_origen()
 
         # Cantidad de EUR retornados
