@@ -34,13 +34,7 @@ class CriptoModel:
         Consulta el cambio entre la moneda origen y la moneda destino
         utilizando la API REST CoinAPI.
         """
-        # TODO QUITARRRRRRRRRRRRR
-        # TODO QUITARRRRRRRRRRRRR
-        # TODO QUITARRRRRRRRRRRRR
-        # TODO QUITARRRRRRRRRRRRR
-        # TODO QUITARRRRRRRRRRRRR
-        #self.cambio = random.random()
-        #return
+     
         
         cabeceras = {
             "X-CoinAPI-Key": dotenv.dotenv_values().get("APIKEY")

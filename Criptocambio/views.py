@@ -1,7 +1,7 @@
 from . import app
 from .models import CriptoModel, Database, Transaccion
 from flask import Flask, render_template, request, redirect
-#APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
+
 
 db = Database()
 #app = Flask(__name__)
