@@ -5,9 +5,6 @@ from typing import List
 import dotenv
 import requests
 
-#from .import APIKEY
-#APIKEY = "36EAEB03-5E48-4A18-9C93-1F2F16B9B9E5"
-
 class APIError(Exception):
     pass
 

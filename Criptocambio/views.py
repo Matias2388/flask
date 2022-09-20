@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect
 
 
 db = Database()
-#app = Flask(__name__)
 
 @app.route('/')
 def home():
