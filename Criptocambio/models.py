@@ -99,8 +99,7 @@ class Database:
             if fila_origen:
                 saldo_origen = fila_origen[2]
 
-                cantidad_venta_origen = tx.cantidad_moneda_destino * tx.cambio_origen_a_destino
-                saldo_origen -= cantidad_venta_origen
+                saldo_origen -= tx.cantidad_moneda_origen
 
                 if saldo_origen < 0:
                     raise APIError(

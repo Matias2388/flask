@@ -1,7 +1,6 @@
 from . import app
-from .models import CriptoModel, Database, Transaccion
+from .models import CriptoModel, Database, Transaccion, APIError
 from flask import Flask, render_template, request, redirect
-
 
 db = Database()
 
@@ -32,6 +31,9 @@ def consulta_inicio():
 
             if destino == "EUR" and origen != "BTC":
                 raise APIError("Solo se permite comprar EUR con BTC")
+
+            if cantidad_origen:
+                raise APIError("La cantidad de compra debe ser mayor a 0")
 
             crypto = CriptoModel(origen, destino)
             crypto.consultar_cambio()
@@ -77,6 +79,9 @@ def compra():
 
         if destino == "EUR" and origen != "BTC":
             raise APIError("Solo se permite comprar EUR con BTC")
+
+        if cantidad_origen:
+            raise APIError("La cantidad de compra debe ser mayor a 0")
 
         crypto = CriptoModel(origen, destino)
         crypto.consultar_cambio()
@@ -126,7 +131,4 @@ def actualizar():
         return render_template("error.html", mensaje=f"Error desconocido: {str(e)}")
 
 
-@app.errorhandler(Exception)
-def error(e):
-    # No funciona sin sacar try-catch en los endpoints!
-    render_template("error.html", mensaje=f"Error desconocido: {str(e)}")
+
